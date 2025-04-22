@@ -1,0 +1,51 @@
+<body>
+  <img class="fundo" src="assets/img/logo.png" alt="">
+  
+
+
+<main>
+    <section class="formulario">
+      <h1>Login</h1>
+      <form class="for" [formGroup]="loginForm" (ngSubmit)="onsubmit()">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          placeholder="email"
+          formControlName="email"
+        />
+        <p *ngIf="email?.invalid && email?.touched">
+          Email inválido
+        </p>
+        <label for="senha">Senha</label>
+        <input
+          type="password"
+          placeholder="senha"
+          formControlName="senha"
+        />
+        <p *ngIf="senha?.invalid && senha?.touched">
+          Senha inválida (mín. 6 caracteres)
+        </p>
+  
+        <button class="btLogin"
+  [disabled]="carregando || loginForm.invalid"
+  type="submit">
+  <ng-container *ngIf="!carregando">Entrar</ng-container>
+  <ng-container *ngIf="carregando">
+    <span class="spinner"></span> Entrando...
+  </ng-container>
+</button>
+
+
+      </form>
+  
+      
+      <button class="btcadastar">cadastrar</button>
+      
+    </section>
+  
+    <section class="lodos-detalhes">
+      <img class="imagem-logo" src="assets/img/logo.png" />
+      <h2>bem vindo ao mundo inteligente </h2>
+    </section>
+  </main>
+  </body>

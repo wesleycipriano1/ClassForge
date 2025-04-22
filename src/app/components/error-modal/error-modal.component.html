@@ -1,0 +1,9 @@
+<div class="overlay" *ngIf="errorMessage">
+    <div class="modal">
+      <div class="icon">⚠️</div>
+      <h2>Erro</h2>
+      <p>{{ errorMessage }}</p>
+      <button (click)="closeModal()">Fechar</button>
+    </div>
+  </div>
+  

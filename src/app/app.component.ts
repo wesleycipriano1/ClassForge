@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ErrorModalComponent } from "./components/error-modal/error-modal.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ErrorModalComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
