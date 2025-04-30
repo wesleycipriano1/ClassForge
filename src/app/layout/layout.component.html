@@ -1,0 +1,16 @@
+<div class="layout">
+  <app-topbar></app-topbar>
+
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+
+  <app-footer 
+    class="footer"
+    [class.visible]="mostrarFooter"
+    [@fadeInOut]="mostrarFooter ? 'show' : 'hide'"
+    [style.visibility]="mostrarFooter ? 'visible' : 'hidden'"
+    [style.opacity]="mostrarFooter ? '1' : '0'"
+    [@.disabled]="false">
+  </app-footer>
+</div>

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  
   private  baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
@@ -13,4 +14,9 @@ export class AuthService {
 login(email: string, senha:string):Observable<boolean>{
   return this.http.post<boolean>(`${this.baseUrl}/login`, {email:email, senha:senha});
 }
+
+
+logout() {
+    throw new Error('Method not implemented.');
+  }
 }

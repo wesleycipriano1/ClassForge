@@ -1,0 +1,183 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  width: 95%;
+  height: 64px;
+  background: linear-gradient(90deg, #4A148C, #7B1FA2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  color: rgb(254, 253, 253);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+    
+  .criar-classe,
+  .historico {
+    background-color: #0cb4f2; 
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    margin-right: 0.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #2563eb; 
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    }
+  }
+
+  .barra-de-pesquisa {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 2rem;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    lucide-icon {
+      margin-right: 0.5rem;
+      color: #fff;
+      width: 20px;
+      height: 20px;
+    }
+
+    input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: #fff;
+      outline: none;
+      font-size: 0.95rem;
+
+      &::placeholder {
+        color: #ddd;
+      }
+    }
+  }
+
+  .acoes {
+    display: flex;
+    gap: 1rem;
+
+    .btn-icone {
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      lucide-icon {
+        width: 22px;
+        height: 22px;
+      }
+    }
+  }
+}
+/**/
+
+/*.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1f2937; // um cinza escuro elegante
+  padding: 0.5rem 1rem;
+  color: #fff;
+
+  .logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .criar-classe,
+  .historico {
+    background-color: #5f96ee; // azul moderno
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    margin-right: 0.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #2563eb; // azul mais escuro no hover
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    }
+  }
+
+  .barra-de-pesquisa {
+    display: flex;
+    align-items: center;
+    background-color: #374151;
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: 1rem;
+
+    input {
+      background: transparent;
+      border: none;
+      color: white;
+      margin-left: 0.5rem;
+      outline: none;
+    }
+
+    lucide-icon {
+      color: #9ca3af;
+    }
+  }
+
+  .acoes {
+    display: flex;
+    gap: 0.5rem;
+
+    .btn-icone {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 0.4rem;
+      border-radius: 50%;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+}
+*/
