@@ -1,0 +1,13 @@
+<div class="recuperar-container">
+    <h2>Recuperar Senha</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label for="email">Digite seu email</label>
+      <input type="email" formControlName="email" placeholder="seu@email.com">
+      <p *ngIf="form.get('email')?.invalid && form.get('email')?.touched">Email inválido</p>
+  
+      <button type="submit" [disabled]="form.invalid">Enviar</button>
+    </form>
+  
+    <p *ngIf="enviado" class="msg-sucesso">Se o email estiver cadastrado, enviaremos instruções.</p>
+  </div>
+  

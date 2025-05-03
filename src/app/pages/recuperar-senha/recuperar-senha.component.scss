@@ -1,0 +1,35 @@
+.recuperar-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+    h2 {
+      margin-bottom: 15px;
+    }
+  
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 8px;
+    }
+  
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    
+  
+    .msg-sucesso {
+      margin-top: 10px;
+      color: green;
+    }
+  }
+  

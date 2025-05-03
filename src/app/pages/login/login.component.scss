@@ -1,13 +1,24 @@
-.fundo {
+.background {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
-  opacity: 0.3;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at center, #0a0a0a 0%, #050505 100%);
+  z-index: -1;
+  overflow: hidden;
 }
+
+
+.terminal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  height: 100%;
+  width: 100%;
+}
+
+
+
 
 main {
   position: relative;
@@ -15,8 +26,10 @@ main {
   gap: 2rem;
   padding: 2rem;
   backdrop-filter: blur(10px);
-  background: rgba(98, 134, 233, 0.1);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+  background: rgb(251, 0, 255,.3);
+  box-shadow: 0 4px 6px rgba(225, 19, 201, 0.6);
+  filter: brightness(1.5);
+
   border-radius: 15px;
   width: 90%;
   max-width: 900px;
@@ -30,7 +43,7 @@ main {
 }
 
 .formulario h1 {
-  color: #1a1a1a;
+  color: #fdfcfc;
   text-align: center;
   margin-bottom: 2rem;
   font-size: 1.8rem;
@@ -44,22 +57,22 @@ main {
 
 .for input {
   padding: 12px;
-  border: 2px solid rgba(0, 0, 0, 0.3);
+  border: 2px solid rgb(252, 251, 251);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #1a1a1a;
+  background: rgb(255, 255, 255);
+  color: #000000;
   font-size: 16px;
   transition: all 0.3s ease;
 }
 
 .for input:focus {
   outline: none;
-  border-color: #9C27B0;
-  background: rgba(255, 255, 255, 0.2);
+  border-color: #0b07f9;
+  background: rgba(255, 255, 255, 0.474);
 }
 
 .for input::placeholder {
-  color: rgba(26, 25, 25, 0.7);
+  color: rgb(0, 0, 0);
 }
 
 .for p {
@@ -69,13 +82,13 @@ main {
 }
 
 .for label {
-  color: #1a1a1a;
+  color: #ffffff;
   font-weight: bold;
   margin-bottom: 0.5rem;
   display: block;
 }
 
-/* Botões padrão */
+
 .btLogin,
 .btcadastar {
   padding: 12px;
@@ -86,17 +99,18 @@ main {
   transition: all 0.3s ease;
 }
 
-/* Botão de login */
+
 .btLogin {
-  background: #9C27B0;
-  color: white;
+  background: #ff9100;
+  color: rgb(0, 0, 0);
 }
 
 .btLogin:hover {
-  background: #7B1FA2;
+  background: #ffe600;
+  color: #000000;
 }
 
-/* Estado desabilitado */
+
 .btLogin:disabled {
   background-color: #ccc;
   color: #666;
@@ -105,21 +119,21 @@ main {
   box-shadow: none;
 }
 
-/* Botão de cadastro */
+
 .btcadastar {
   background: transparent;
   border: 2px solid #9C27B0;
-  color: #9C27B0;
+  color: #ffffff;
   margin-top: 1rem;
   width: 100%;
 }
 
 .btcadastar:hover {
-  background: #9C27B0;
+  background: #060af6;
   color: white;
 }
 
-/* Seção da logo */
+
 .lodos-detalhes {
   flex: 1;
   display: flex;
@@ -136,7 +150,7 @@ main {
   margin-bottom: 1.5rem;
 }
 
-/* Animação de loading */
+
 .spinner {
   border: 3px solid #fff;
   border-top: 3px solid #007bff;
@@ -155,7 +169,13 @@ main {
   }
 }
 
-/* Responsividade */
+.lodos-detalhes h2 {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  color: #00A3FF;
+}
+
+
 @media (max-width: 768px) {
   main {
     flex-direction: column;
@@ -166,15 +186,15 @@ main {
   .lodos-detalhes h2 {
     font-size: 1.3rem;
     margin-top: 1rem;
+    color: #fefefe;
   }
 
   .imagem-logo {
     max-width: 160px;
+    color: rgb(255, 255, 255);
   }
 
-  .formulario {
-    background-color: #7B1FA2;
-  }
+  
 
 .input-container {
   position: relative;
@@ -185,19 +205,25 @@ main {
   padding-right: 40px; 
 }
 
-.btn-toggle-senha {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
 }
 
 
+.recuperar-senha {
+  margin-top: -10px;
+  margin-bottom: 15px;
+  text-align: right;
 
+  a {
+    color: #007bff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s;
 
-
+    &:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+  }
 }
+

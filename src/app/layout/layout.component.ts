@@ -4,11 +4,12 @@ import { FooterComponent } from "../components/footer/footer.component";
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { LoadingOverlayComponent } from "../shared/loading-overlay/loading-overlay.component";
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, TopbarComponent, FooterComponent, CommonModule],
+  imports: [RouterOutlet, TopbarComponent, FooterComponent, CommonModule, LoadingOverlayComponent],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   animations: [

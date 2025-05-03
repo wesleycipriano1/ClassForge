@@ -14,8 +14,13 @@ import { Search, LogOut, User } from 'lucide-angular';
   styleUrls: ['./topbar.component.scss']
 })
 export class TopbarComponent {
+
   constructor(private authService: AuthService, private router: Router) {}
 
+
+criarCodigo() {
+this.router.navigate(['/criar']);
+}
   logout() {
    // this.authService.logout();
     this.router.navigate(['login']);

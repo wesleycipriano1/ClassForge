@@ -1,0 +1,46 @@
+:host {
+    position: absolute;
+    width: 220px;
+    height: 160px;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+  
+  
+  .terminal {
+    background-color: #1e1e1e;
+    padding: 1rem;
+    border-radius: 8px;
+    width: 300px;
+    height: auto;
+    overflow: hidden;
+    white-space: pre-wrap;
+    font-family: monospace;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: white;
+    animation: fadeIn 0.5s ease-in;
+    font-size: 14px;
+    position: absolute;
+  }
+  
+  .python {
+    border-left: 5px solid #3572A5; // azul Python
+    color: #c5dfff;
+  }
+  
+  .java {
+    border-left: 5px solid #b07219; // marrom Java
+    color: #f5deb3;
+  }
+  
+  .c {
+    border-left: 5px solid #555555; // cinza C
+    color: #d0ffd0;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  

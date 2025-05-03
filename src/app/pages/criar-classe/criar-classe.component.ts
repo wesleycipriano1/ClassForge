@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ErrorService } from '../../services/error.service';
+import { LoadingService } from '../../shared/loading.service';
 
 @Component({
   selector: 'app-criar-classe',
@@ -16,7 +17,7 @@ export class CriarClasseComponent {
   codigoGerado: string = '';
   
 
-  constructor(private fb: FormBuilder, private http: HttpClient,private erroService: ErrorService) {
+  constructor(private fb: FormBuilder, private http: HttpClient,private erroService: ErrorService,private loadindService: LoadingService) {
     
     this.form = this.fb.group({
       linguagem: ['java', Validators.required],
@@ -58,13 +59,19 @@ export class CriarClasseComponent {
   
 
   gerarClasse() {
+    
     const linguagem = this.form.value.linguagem;
     if (this.form.valid) {
+      this.loadindService.mostrar();
       this.http.post<{ codigo: string }>(`http://localhost:8080/gerar-classe/${linguagem}`, this.form.value)
 
         .subscribe({
-          next: res => this.codigoGerado = res.codigo,
-          error: err => this.erroService.showError("Erro ao gerar classe, não foi possível conectar ao servidor!"),
+          next: res => {this.codigoGerado = res.codigo,
+          this.loadindService.esconder();;
+        },
+          error: err => {this.erroService.showError("Erro ao gerar classe, não foi possível conectar ao servidor!")
+            ,this.loadindService.esconder();
+          },
         });
     } else {
       this.erroService.showError("Preencha todos os campos obrigatórios!");

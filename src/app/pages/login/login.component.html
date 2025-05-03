@@ -1,7 +1,17 @@
 <body>
-  <img class="fundo" src="assets/img/logo.png" alt="">
+  <div class="background">
+    <ng-container *ngFor="let terminal of terminals">
+      <app-animated-terminal
+        [style.top]="terminal.top"
+        [style.left]="terminal.left"
+        [delay]="terminal.delay"
+      ></app-animated-terminal>
+    </ng-container>
+  </div>
   
 
+  
+  
 
 <main>
     <section class="formulario">
@@ -25,6 +35,9 @@
         <p *ngIf="senha?.invalid && senha?.touched">
           Senha inválida (mín. 6 caracteres)
         </p>
+        <div class="recuperar-senha">
+          <a (click)="esqueceuSenha()">Esqueceu a senha?</a>
+        </div>
   
         <button class="btLogin"
   [disabled]="carregando || loginForm.invalid"
@@ -34,6 +47,7 @@
     <span class="spinner"></span> Entrando...
   </ng-container>
 </button>
+
 
 
       </form>
