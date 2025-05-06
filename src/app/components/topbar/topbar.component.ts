@@ -15,15 +15,20 @@ import { Search, LogOut, User } from 'lucide-angular';
 })
 export class TopbarComponent {
 
+
   constructor(private authService: AuthService, private router: Router) {}
 
+verHitorico() {
+this.router.navigate(['/historico']);
 
+}
 criarCodigo() {
 this.router.navigate(['/criar']);
 }
   logout() {
-   // this.authService.logout();
-    this.router.navigate(['login']);
+    
+   this.authService.logout();
+   
   }
 
   abrirPerfil() {

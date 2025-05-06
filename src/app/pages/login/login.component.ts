@@ -14,6 +14,7 @@ import { AnimatedTerminalComponent } from "../../components/animated-terminal/an
 })
 export class LoginComponent {
 
+
   loginForm: FormGroup;
   carregando = false;
   mostrarSenha = false;
@@ -113,5 +114,9 @@ export class LoginComponent {
 
 esqueceuSenha() {
 this.router.navigate(['/recuperar-senha']);
+}
+
+cadastrar() {
+this.router.navigate(['/cadastro']);
 }
 }

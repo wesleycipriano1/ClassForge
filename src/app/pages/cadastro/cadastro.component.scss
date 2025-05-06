@@ -1,0 +1,72 @@
+.cadastro-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #1e1e2f;
+  
+    .formulario {
+      background: #2d2d44;
+      padding: 2rem;
+      border-radius: 10px;
+      color: white;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 10px #000;
+  
+      h1 {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+  
+      label {
+        display: block;
+        margin-top: 1rem;
+      }
+  
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 4px;
+        border: none;
+        border-radius: 5px;
+        background: #444;
+        color: white;
+      }
+  
+      p {
+        color: #ff5252;
+        font-size: 0.8rem;
+        margin: 0.3rem 0 0;
+      }
+      spam{color: red;
+
+      }
+  
+      button {
+        margin-top: 1.5rem;
+        width: 100%;
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+  
+        &:disabled {
+          background-color: gray;
+          cursor: not-allowed;
+        }
+      }
+  
+      .voltar-login {
+        display: block;
+        margin-top: 1rem;
+        text-align: center;
+        color: #9ecbff;
+        text-decoration: underline;
+      }
+    }
+  }
+  

@@ -1,0 +1,32 @@
+<div class="cadastro-container">
+    <section class="formulario">
+      <h1>Cadastro</h1>
+      <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+        <label>Nome</label>
+        <input type="text" formControlName="nome" placeholder="Seu nome" />
+        <p *ngIf="nome?.invalid && nome?.touched">Nome é obrigatório</p>
+  
+        <label>Email</label>
+        <input type="email" formControlName="email" placeholder="Seu email" />
+        <p *ngIf="email?.invalid && email?.touched">Email inválido</p>
+  
+        <label>Telefone</label>
+        <input type="text" formControlName="telefone" placeholder="Ex: 87999999999" />
+        <p *ngIf="telefone?.invalid && telefone?.touched">Telefone inválido</p>
+  
+        <label>Senha</label>
+        <input type="password" formControlName="senha" placeholder="Senha" />
+        <p *ngIf="senha?.invalid && senha?.touched">Senha deve ter pelo menos 6 caracteres</p>
+  
+        <label>Confirmar Senha</label>
+        <input type="password" formControlName="confirmarSenha" placeholder="Confirme a senha" />
+        <p *ngIf="confirmarSenha?.invalid && confirmarSenha?.touched">Confirme a senha</p>
+        <p *ngIf="!senhasIguais() && confirmarSenha?.touched">As senhas não coincidem</p>
+  
+        <button type="submit" [disabled]="cadastroForm.invalid">Cadastrar</button>
+      </form>
+  
+      <a routerLink="/login" class="voltar-login">Voltar para Login</a>
+    </section>
+  </div>
+  

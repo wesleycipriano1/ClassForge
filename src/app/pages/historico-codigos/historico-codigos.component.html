@@ -1,0 +1,26 @@
+<section class="historico-codigos">
+    <h2>Histórico de Códigos Gerados</h2>
+
+    
+  
+    <div class="card" *ngFor="let item of historicoPaginado; let i = index">
+      <div class="card-header">
+        <h3>{{ item.titulo }}</h3>
+        <div class="acoes">
+          <button title="copiar codigo" (click)="copiar(item.codigo)">📋</button>
+          <button (click)="expandirOuFechar(i)">
+            {{ codigoExpandido === i ? '🔼 Fechar' : '🔽 Ver código' }}
+          </button>
+          <button title="excluir" (click)="excluir(i)">🗑️</button>
+        </div>
+      </div>
+      <pre class="codigo" *ngIf="codigoExpandido === i">{{ item.codigo }}</pre>
+    </div>
+  
+    <div class="paginacao">
+      <button (click)="mudarPagina(-1)" [disabled]="paginaAtual === 1">⬅️ Anterior</button>
+      <span>Página {{ paginaAtual }} de {{ totalPaginas() }}</span>
+      <button (click)="mudarPagina(1)" [disabled]="paginaAtual === totalPaginas()">Próxima ➡️</button>
+    </div>
+  </section>
+  
