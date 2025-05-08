@@ -1,3 +1,8 @@
+
+
+
+<div><app-loading-overlay /></div>
+
 <div class="cadastro-container">
     <section class="formulario">
       <h1>Cadastro</h1>
@@ -21,12 +26,13 @@
         <label>Confirmar Senha</label>
         <input type="password" formControlName="confirmarSenha" placeholder="Confirme a senha" />
         <p *ngIf="confirmarSenha?.invalid && confirmarSenha?.touched">Confirme a senha</p>
-        <p *ngIf="!senhasIguais() && confirmarSenha?.touched">As senhas não coincidem</p>
+        
   
         <button type="submit" [disabled]="cadastroForm.invalid">Cadastrar</button>
       </form>
   
       <a routerLink="/login" class="voltar-login">Voltar para Login</a>
+      
     </section>
   </div>
   

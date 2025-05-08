@@ -5,13 +5,17 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ErrorService } from '../../services/error.service';
 import { AnimatedTerminalComponent } from "../../components/animated-terminal/animated-terminal.component";
+import { LoadingService } from '../../shared/loading.service';
+import { LoadingOverlayComponent } from "../../shared/loading-overlay/loading-overlay.component";
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule, AnimatedTerminalComponent],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, AnimatedTerminalComponent, LoadingOverlayComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss'] 
 })
+
 export class LoginComponent {
 
 
@@ -27,7 +31,8 @@ export class LoginComponent {
     private errorService: ErrorService,
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService,
   ) { 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -36,6 +41,7 @@ export class LoginComponent {
   }
 
   onsubmit(): void {
+   
     if (this.carregando) return;
 
     if (this.loginForm.invalid) {
@@ -45,21 +51,25 @@ export class LoginComponent {
 
     const { email, senha } = this.loginForm.value;
     this.carregando = true;
+    this.loadingService.mostrar();
 
     this.authService.login(email, senha).subscribe({
-      next: (foi) => {
+      next: () => {
         this.carregando = false;
-        if (foi) {
-          console.log('Login bem-sucedido!');
-          this.router.navigate(['/home']);
-        } else {
-          this.errorService.showError("Email ou senha inválidos!");
-        }
+        this.loadingService.esconder();
+        this.router.navigate(['/home']);
       },
-      error: (err) => {
+      error: (err: Error) => {
         this.carregando = false;
-        this.errorService.showError("Sem conexão com o servidor!");
-        console.error('Erro ao fazer login:', err);
+        this.loadingService.esconder();
+    
+        if (err.message === 'conexao') {
+          this.errorService.showError('Sem conexão com o servidor!');
+        } else if (err.message === 'credenciais') {
+          this.errorService.showError('Email ou senha inválidos!');
+        } else {
+          this.errorService.showError('Erro inesperado ao fazer login.');
+        }
       }
     });
   }
@@ -113,6 +123,7 @@ export class LoginComponent {
 
 
 esqueceuSenha() {
+  
 this.router.navigate(['/recuperar-senha']);
 }
 
