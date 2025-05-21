@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private http: HttpClient,private router: Router) { }
 
 login(email: string, senha:string){
-  return this.http.post<{token: string}>('$environment.apiUrl/login', {email, senha}).pipe(
+  return this.http.post<{token: string}>(`${environment.apiUrl}/auth/login`, { email, senha }).pipe(
     map(resposta=>{
       localStorage.setItem('token', resposta.token);
       return {sucess : true} ;

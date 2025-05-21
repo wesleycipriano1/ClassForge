@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ErrorService } from '../../services/error.service';
@@ -11,32 +17,24 @@ import { environment } from '../../../environments/environment';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './criar-classe.component.html',
-  styleUrls: ['./criar-classe.component.scss']
+  styleUrls: ['./criar-classe.component.scss'],
 })
 export class CriarClasseComponent {
   form: FormGroup;
   codigoGerado: string = '';
-  
 
-  constructor(private fb: FormBuilder,
-     private http: HttpClient,
-     private erroService: ErrorService,
-     private loadindService: LoadingService,
-     
-
-     
-    
-    
-    ) {
-    
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private erroService: ErrorService,
+    private loadindService: LoadingService
+  ) {
     this.form = this.fb.group({
       linguagem: ['java', Validators.required],
       nomeClasse: ['', Validators.required],
-      encapsulamento: ['public', Validators.required],
+      encapsulamentoClasse: ['public', Validators.required],
       heranca: [''],
-      atributos: this.fb.array([
-        this.criarAtributo()
-      ])
+      atributos: this.fb.array([this.criarAtributo()]),
     });
   }
 
@@ -48,7 +46,7 @@ export class CriarClasseComponent {
     return this.fb.group({
       nome: ['', Validators.required],
       tipo: ['String', Validators.required],
-      visibilidade: ['private', Validators.required]
+      encapsulamento: ['private', Validators.required],
     });
   }
 
@@ -61,30 +59,39 @@ export class CriarClasseComponent {
   }
   copiarCodigo() {
     if (this.codigoGerado) {
-      navigator.clipboard.writeText(this.codigoGerado)
-        .then(() => this.erroService.showError("Código copiado com sucesso!"))// depois lembrar de criar uma classe de mensagenm que não seja de erro
-        .catch(() => this.erroService.showError("Erro ao copiar o código."));
+      navigator.clipboard
+        .writeText(this.codigoGerado)
+        .then(() => this.erroService.showError('Código copiado com sucesso!')) // depois lembrar de criar uma classe de mensagenm que não seja de erro
+        .catch(() => this.erroService.showError('Erro ao copiar o código.'));
     }
   }
-  
 
   gerarClasse() {
-    
-    const linguagem = this.form.value.linguagem;
+    console.log(this.form.value);
+
     if (this.form.valid) {
       this.loadindService.mostrar();
-      this.http.post<{ codigo: string }>(environment.apiUrl+`/gerar-classe/${linguagem}`, this.form.value)
-
+      this.http
+        .post(
+          environment.apiUrl + `/classe/gerar`,
+          this.form.value,
+          { responseType: 'text' } 
+        )
         .subscribe({
-          next: res => {this.codigoGerado = res.codigo,
-          this.loadindService.esconder();;
-        },
-          error: err => {this.erroService.showError("Erro ao gerar classe, não foi possível conectar ao servidor!")
-            ,this.loadindService.esconder();
+          next: (res: string) => {
+            this.codigoGerado = res;
+            this.loadindService.esconder();
+          },
+          error: (err) => {
+            console.error('Erro ao gerar classe:', err);
+            this.erroService.showError(
+              'Erro ao gerar classe, não foi possível conectar ao servidor!'
+            );
+            this.loadindService.esconder();
           },
         });
     } else {
-      this.erroService.showError("Preencha todos os campos obrigatórios!");
+      this.erroService.showError('Preencha todos os campos obrigatórios!');
     }
   }
 }

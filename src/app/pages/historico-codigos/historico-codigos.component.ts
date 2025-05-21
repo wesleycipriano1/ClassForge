@@ -1,5 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Subject, takeUntil } from 'rxjs';
+
+interface HistoricoItem {
+  id: number;
+  linguagem: string;
+  codigo: string;
+  dataCriacao: Date;
+  
+}
 
 @Component({
   selector: 'app-historico-codigos',
@@ -8,56 +19,104 @@ import { Component } from '@angular/core';
   templateUrl: './historico-codigos.component.html',
   styleUrls: ['./historico-codigos.component.scss']
 })
-export class HistoricoCodigosComponent {
-  historicoCompleto = [
-    { titulo: 'Classe Cliente', codigo: 'public class Cliente {\n private String nome;\n}' },
-    { titulo: 'Classe Produto', codigo: 'public class Produto {\n private double preco;\n}' },
-    { titulo: 'Classe Pedido', codigo: 'public class Pedido {\n private List<Item> itens;\n}' },
-    { titulo: 'Classe Usuario', codigo: 'public class Usuario {\n private String email;\n}' },
-    { titulo: 'Classe Carro', codigo: 'public class Carro {\n private String modelo;\n}' },
-    { titulo: 'Classe Animal', codigo: 'public class Animal {\n private String especie;\n}' },
-    { titulo: 'Classe Livro', codigo: 'public class Livro {\n private String autor;\n}' },
-    { titulo: 'Classe Endereco', codigo: 'public class Endereco {\n private String rua;\n}' },
-    { titulo: 'Classe Funcionario', codigo: 'public class Funcionario {\n private double salario;\n}' },
-    { titulo: 'Classe Conta', codigo: 'public class Conta {\n private double saldo;\n}' },
-    { titulo: 'Classe Agenda', codigo: 'public class Agenda {\n private List<Evento> eventos;\n}' },
-    
-  ];
-
+export class HistoricoCodigosComponent implements OnInit, OnDestroy {
+  historicoCompleto: HistoricoItem[] = [];
   paginaAtual = 1;
   porPagina = 10;
-  codigoExpandido: number | null = null;
+  codigoExpandidoId: number | null = null;
+  carregando = true;
+  mensagemFeedback = '';
 
-  get historicoPaginado() {
+  private destroy$ = new Subject<void>();
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.carregarHistorico();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private carregarHistorico(): void {
+    this.http.get<HistoricoItem[]>(`${environment.apiUrl}/classe/historico`)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res) => {
+          this.historicoCompleto = res;
+          this.carregando = false;
+        },
+        error: (err) => {
+          console.error('Erro ao buscar histórico:', err);
+          this.mostrarFeedback('Erro ao carregar histórico');
+          this.carregando = false;
+        }
+      });
+  }
+
+  get historicoPaginado(): HistoricoItem[] {
     const inicio = (this.paginaAtual - 1) * this.porPagina;
     return this.historicoCompleto.slice(inicio, inicio + this.porPagina);
   }
 
-  expandirOuFechar(index: number) {
-    this.codigoExpandido = this.codigoExpandido === index ? null : index;
+  expandirOuFechar(item: HistoricoItem): void {
+    this.codigoExpandidoId = this.codigoExpandidoId === item.id ? null : item.id;
   }
 
-  copiar(codigo: string) {
-    navigator.clipboard.writeText(codigo);
-    alert('Código copiado!');
+  async copiar(codigo: string): Promise<void> {
+    try {
+      await navigator.clipboard.writeText(codigo);
+      this.mostrarFeedback('Código copiado!');
+    } catch (err) {
+      console.error('Falha ao copiar:', err);
+      this.mostrarFeedback('Erro ao copiar código');
+    }
   }
 
-  excluir(index: number) {
-    const realIndex = (this.paginaAtual - 1) * this.porPagina + index;
-    this.historicoCompleto.splice(realIndex, 1);
+  async excluir(item: HistoricoItem): Promise<void> {
+    const confirmado = confirm('Tem certeza que deseja excluir este item?');
+    if (!confirmado) return;
+
+    this.http.delete(`${environment.apiUrl}/classe/deletar/${item.id}`)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.historicoCompleto = this.historicoCompleto.filter(h => h.id !== item.id);
+          this.mostrarFeedback('Item excluído com sucesso');
+          this.ajustarPaginaAposExclusao();
+        },
+        error: (err) => {
+          console.error('Erro ao excluir:', err);
+          this.mostrarFeedback('Erro ao excluir item');
+        }
+      });
+  }
+
+  private ajustarPaginaAposExclusao(): void {
     if (this.historicoPaginado.length === 0 && this.paginaAtual > 1) {
       this.paginaAtual--;
     }
   }
 
-  totalPaginas() {
+  totalPaginas(): number {
     return Math.ceil(this.historicoCompleto.length / this.porPagina);
   }
 
-  mudarPagina(delta: number) {
+  mudarPagina(delta: number): void {
     const novaPagina = this.paginaAtual + delta;
     if (novaPagina >= 1 && novaPagina <= this.totalPaginas()) {
       this.paginaAtual = novaPagina;
     }
+  }
+
+  trackByHistorico(index: number, item: HistoricoItem): number {
+    return item.id;
+  }
+
+  private mostrarFeedback(mensagem: string): void {
+    this.mensagemFeedback = mensagem;
+    setTimeout(() => this.mensagemFeedback = '', 3000);
   }
 }

@@ -1,45 +1,46 @@
-<h2>Criar Classe </h2>
+<h2>Criar Classe</h2>
 
 <form [formGroup]="form" (ngSubmit)="gerarClasse()">
-
-    <div class="form-group">
-        <label for="linguagem">Linguagem</label>
-        <select id="linguagem" formControlName="linguagem">
-          <option value="java">Java</option>
-          <option value="python">Python</option>
-          <option value="csharp">C#</option>
-          
-        </select>
-      </div>
+  <div class="form-group">
+    <label for="linguagem">Linguagem</label>
+    <select id="linguagem" formControlName="linguagem">
+      <option value="java">Java</option>
+      <option value="python">Python</option>
+      <option value="csharp">C#</option>
+    </select>
+  </div>
   <label>Nome da Classe:</label>
-  <input formControlName="nomeClasse" type="text">
+  <input formControlName="nomeClasse" type="text" />
 
   <label>Encapsulamento:</label>
-  <select formControlName="encapsulamento">
+  <select formControlName="encapsulamentoClasse">
     <option value="public">public</option>
     <option value="private">private</option>
     <option value="protected">protected</option>
   </select>
 
   <label>Herança (opcional):</label>
-  <input formControlName="heranca" type="text">
+  <input formControlName="heranca" type="text" />
 
   <div formArrayName="atributos">
     <h3>Atributos:</h3>
-    <div *ngFor="let attr of atributos.controls; let i = index" [formGroupName]="i">
-      <input placeholder="nome" formControlName="nome">
-      <label >Tipo:</label>
+    <div
+      *ngFor="let attr of atributos.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <input placeholder="nome" formControlName="nome" />
+      <label>Tipo:</label>
       <select placeholder="tipo" formControlName="tipo">
-        <option value="String">String</option> 
+        <option value="String">String</option>
         <option value="boolean">boolean</option>
         <option value="int">int</option>
         <option value="double">double</option>
         <option value="float">float</option>
         <option value="long">long</option>
         <option value="short">short</option>
-    </select>
-    <label >Encapsulamento:</label>
-      <select formControlName="visibilidade">
+      </select>
+      <label>Encapsulamento:</label>
+      <select formControlName="encapsulamento">
         <option value="private">private</option>
         <option value="public">public</option>
         <option value="protected">protected</option>
@@ -48,12 +49,16 @@
     </div>
   </div>
 
-  <button type="button" (click)="adicionarAtributo()">Adicionar Atributo</button>
+  <button type="button" (click)="adicionarAtributo()">
+    Adicionar Atributo
+  </button>
   <button type="submit">Gerar Classe</button>
 </form>
 
 <div class="codigo-gerado" *ngIf="codigoGerado">
   <h3>Classe Gerada:</h3>
   <pre><code>{{ codigoGerado }}</code></pre>
-  <button class="copiar-codigo" (click)="copiarCodigo()">📋 Copiar Código</button>
+  <button class="copiar-codigo" (click)="copiarCodigo()">
+    📋 Copiar Código
+  </button>
 </div>

@@ -57,7 +57,7 @@ export class LoginComponent {
       next: () => {
         this.carregando = false;
         this.loadingService.esconder();
-        this.router.navigate(['/home']);
+        this.router.navigate(['/criar']);
       },
       error: (err: Error) => {
         this.carregando = false;

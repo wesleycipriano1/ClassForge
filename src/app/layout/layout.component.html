@@ -1,4 +1,5 @@
-
+<body class="body">
+  
 
 <div class="layout">
   <app-topbar></app-topbar>
@@ -8,12 +9,14 @@
     <app-loading-overlay />
   </div>
 
-  <app-footer 
+  <app-footer
     class="footer"
     [class.visible]="mostrarFooter"
     [@fadeInOut]="mostrarFooter ? 'show' : 'hide'"
     [style.visibility]="mostrarFooter ? 'visible' : 'hidden'"
     [style.opacity]="mostrarFooter ? '1' : '0'"
-    [@.disabled]="false">
+    [@.disabled]="false"
+  >
   </app-footer>
 </div>
+</body>

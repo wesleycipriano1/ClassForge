@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-error-modal',
-  standalone: true, // <-- ISSO AQUI É O QUE FALTAVA
+  standalone: true, 
   imports: [CommonModule],
   templateUrl: './error-modal.component.html',
   styleUrls: ['./error-modal.component.scss']
