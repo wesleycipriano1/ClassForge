@@ -1,0 +1,22 @@
+@if (mostrar) {
+<div class="mensagem-container" [class]="'mensagem-' + tipo">
+  <div class="mensagem-conteudo">
+    <span class="material-icons icone">{{ getIcone() }}</span>
+    <div class="mensagem-texto">
+      <strong>{{ mensagem }}</strong>
+      @if (detalhes) {
+      <p>{{ detalhes }}</p>
+      }
+    </div>
+
+    @if (tipo === 'confirmacao') {
+    <div class="mensagem-botoes">
+      <button class="btn-confirmar" (click)="confirmar()">Confirmar</button>
+      <button class="btn-cancelar" (click)="fechar()">Cancelar</button>
+    </div>
+    } @else {
+    <button class="fechar" (click)="fechar()">×</button>
+    }
+  </div>
+</div>
+}

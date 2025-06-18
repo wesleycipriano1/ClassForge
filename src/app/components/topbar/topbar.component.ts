@@ -7,31 +7,29 @@ import { Search, LogOut, User } from 'lucide-angular';
 @Component({
   selector: 'app-topbar',
   standalone: true,
-  imports: [
-    LucideAngularModule
-  ],
+  imports: [LucideAngularModule],
   templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.scss']
+  styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent {
-
+  ativo: string = 'criar';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-verHitorico() {
-this.router.navigate(['/historico']);
-
-}
-criarCodigo() {
-this.router.navigate(['/criar']);
-}
+  verHitorico() {
+    this.ativo = 'historico';
+    this.router.navigate(['/historico']);
+  }
+  criarCodigo() {
+    this.ativo = 'criar';
+    this.router.navigate(['/criar']);
+  }
   logout() {
-    
-   this.authService.logout();
-   
+    this.authService.logout();
   }
 
   abrirPerfil() {
+    this.ativo = '';
     this.router.navigate(['/perfil']);
   }
 }

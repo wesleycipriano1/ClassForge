@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ErrorService } from '../../services/error.service';
+
 import { AnimatedTerminalComponent } from "../../components/animated-terminal/animated-terminal.component";
 import { LoadingService } from '../../shared/loading.service';
 import { LoadingOverlayComponent } from "../../shared/loading-overlay/loading-overlay.component";
+import { MensagemService } from '../../services/mensagem.service';
 
 @Component({
   selector: 'app-login',
@@ -28,11 +29,12 @@ export class LoginComponent {
     this.generateNonOverlappingPositions(15, 150, 100);
 
   constructor(
-    private errorService: ErrorService,
+    
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private loadingService: LoadingService,
+    private mensagemService: MensagemService
   ) { 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -64,11 +66,14 @@ export class LoginComponent {
         this.loadingService.esconder();
     
         if (err.message === 'conexao') {
-          this.errorService.showError('Sem conexão com o servidor!');
+          this.mensagemService.erro(" erro de conexão", "Verifique sua conexão com a internet e tente novamente.");
+          
         } else if (err.message === 'credenciais') {
-          this.errorService.showError('Email ou senha inválidos!');
+          this.mensagemService.erro(" credenciais inválidas", "Verifique seu email e senha e tente novamente.");
+          
         } else {
-          this.errorService.showError('Erro inesperado ao fazer login.');
+          this.mensagemService.erro(" erro desconhecido", "Ocorreu um erro inesperado. Tente novamente mais tarde.");
+          
         }
       }
     });

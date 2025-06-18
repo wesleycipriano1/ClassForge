@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TokenService {
-
   private readonly TOKEN_KEY = 'token';
 
   salvarToken(token: string): void {
@@ -35,6 +34,9 @@ export class TokenService {
   }
 
   estaAutenticado(): boolean {
+    const token = this.obterToken();
+    if (!token) return false;
+
     return !this.tokenExpirado();
   }
 }

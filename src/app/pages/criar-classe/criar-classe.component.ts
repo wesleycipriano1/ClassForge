@@ -8,9 +8,9 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ErrorService } from '../../services/error.service';
 import { LoadingService } from '../../shared/loading.service';
 import { environment } from '../../../environments/environment';
+import { MensagemService } from '../../services/mensagem.service';
 
 @Component({
   selector: 'app-criar-classe',
@@ -26,7 +26,7 @@ export class CriarClasseComponent {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private erroService: ErrorService,
+    private mensagemService: MensagemService,
     private loadindService: LoadingService
   ) {
     this.form = this.fb.group({
@@ -34,6 +34,7 @@ export class CriarClasseComponent {
       nomeClasse: ['', Validators.required],
       encapsulamentoClasse: ['public', Validators.required],
       heranca: [''],
+      interfaces: [''], 
       atributos: this.fb.array([this.criarAtributo()]),
     });
   }
@@ -61,37 +62,48 @@ export class CriarClasseComponent {
     if (this.codigoGerado) {
       navigator.clipboard
         .writeText(this.codigoGerado)
-        .then(() => this.erroService.showError('Código copiado com sucesso!')) // depois lembrar de criar uma classe de mensagenm que não seja de erro
-        .catch(() => this.erroService.showError('Erro ao copiar o código.'));
+        .then(() => this.mensagemService.sucesso('Código copiado com sucesso!')) 
+        .catch(() => this.mensagemService.erro('Erro ao copiar o código.'));
     }
   }
 
   gerarClasse() {
-    console.log(this.form.value);
+  if (this.form.valid) {
+    this.loadindService.mostrar();
 
-    if (this.form.valid) {
-      this.loadindService.mostrar();
-      this.http
-        .post(
-          environment.apiUrl + `/classe/gerar`,
-          this.form.value,
-          { responseType: 'text' } 
-        )
-        .subscribe({
-          next: (res: string) => {
-            this.codigoGerado = res;
-            this.loadindService.esconder();
-          },
-          error: (err) => {
-            console.error('Erro ao gerar classe:', err);
-            this.erroService.showError(
-              'Erro ao gerar classe, não foi possível conectar ao servidor!'
-            );
-            this.loadindService.esconder();
-          },
-        });
-    } else {
-      this.erroService.showError('Preencha todos os campos obrigatórios!');
-    }
+    const formValue = this.form.value;
+
+   const payload = {
+  ...formValue,
+  interfaces: formValue.interfaces
+    ? formValue.interfaces
+        .split(',')
+        .map((i: string) => i.trim())
+        .filter((i: string) => i)
+    : [],
+};
+
+
+    this.http
+      .post(environment.apiUrl + `/classe/gerar`, payload, {
+        responseType: 'text',
+      })
+      .subscribe({
+        next: (res: string) => {
+          this.codigoGerado = res;
+          this.loadindService.esconder();
+        },
+        error: (err) => {
+          console.error('Erro ao gerar classe:', err);
+          this.mensagemService.erro(
+            'Erro ao gerar classe, não foi possível conectar ao servidor!'
+          );
+          this.loadindService.esconder();
+        },
+      });
+  } else {
+    this.mensagemService.erro('Preencha todos os campos obrigatórios!');
   }
+}
+
 }

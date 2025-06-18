@@ -33,10 +33,22 @@ export class AuthService {
       );
   }
 
-  logout() {
-    localStorage.removeItem('token');
+ 
+logoutComRedirecionamento(isExpired: boolean = false): void {
+  localStorage.removeItem('token');
+  
+  if (isExpired) {
+    this.router.navigate(['/login'], {
+      queryParams: { expired: true } 
+    });
+  } else {
     this.router.navigate(['/login']);
   }
+}
+
+logout(): void {
+  this.logoutComRedirecionamento(false);
+}
 
   getToken(): string | null {
     return localStorage.getItem('token');

@@ -3,13 +3,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Subject, takeUntil } from 'rxjs';
+import { MensagemService } from '../../services/mensagem.service';
 
 interface HistoricoItem {
   id: number;
   linguagem: string;
   codigo: string;
   dataCriacao: Date;
-  
 }
 
 @Component({
@@ -17,7 +17,7 @@ interface HistoricoItem {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './historico-codigos.component.html',
-  styleUrls: ['./historico-codigos.component.scss']
+  styleUrls: ['./historico-codigos.component.scss'],
 })
 export class HistoricoCodigosComponent implements OnInit, OnDestroy {
   historicoCompleto: HistoricoItem[] = [];
@@ -29,7 +29,10 @@ export class HistoricoCodigosComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private mensagemService: MensagemService
+  ) {}
 
   ngOnInit(): void {
     this.carregarHistorico();
@@ -41,7 +44,8 @@ export class HistoricoCodigosComponent implements OnInit, OnDestroy {
   }
 
   private carregarHistorico(): void {
-    this.http.get<HistoricoItem[]>(`${environment.apiUrl}/classe/historico`)
+    this.http
+      .get<HistoricoItem[]>(`${environment.apiUrl}/classe/historico`)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
@@ -49,10 +53,9 @@ export class HistoricoCodigosComponent implements OnInit, OnDestroy {
           this.carregando = false;
         },
         error: (err) => {
-          console.error('Erro ao buscar histórico:', err);
-          this.mostrarFeedback('Erro ao carregar histórico');
+          this.mensagemService.erro('Erro ao carregar histórico');
           this.carregando = false;
-        }
+        },
       });
   }
 
@@ -62,36 +65,48 @@ export class HistoricoCodigosComponent implements OnInit, OnDestroy {
   }
 
   expandirOuFechar(item: HistoricoItem): void {
-    this.codigoExpandidoId = this.codigoExpandidoId === item.id ? null : item.id;
+    this.codigoExpandidoId =
+      this.codigoExpandidoId === item.id ? null : item.id;
   }
 
   async copiar(codigo: string): Promise<void> {
     try {
       await navigator.clipboard.writeText(codigo);
-      this.mostrarFeedback('Código copiado!');
+      this.mensagemService.sucesso('Código copiado!');
     } catch (err) {
-      console.error('Falha ao copiar:', err);
-      this.mostrarFeedback('Erro ao copiar código');
+      this.mensagemService.erro('Erro ao copiar código');
     }
   }
 
   async excluir(item: HistoricoItem): Promise<void> {
-    const confirmado = confirm('Tem certeza que deseja excluir este item?');
-    if (!confirmado) return;
+    try {
+      const confirmado = await this.mensagemService.confirmar(
+        'Confirmar exclusão',
+        `Tem certeza que deseja excluir o item "${item.linguagem}"?`
+      );
 
-    this.http.delete(`${environment.apiUrl}/classe/deletar/${item.id}`)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.historicoCompleto = this.historicoCompleto.filter(h => h.id !== item.id);
-          this.mostrarFeedback('Item excluído com sucesso');
-          this.ajustarPaginaAposExclusao();
-        },
-        error: (err) => {
-          console.error('Erro ao excluir:', err);
-          this.mostrarFeedback('Erro ao excluir item');
-        }
-      });
+      if (!confirmado) return;
+
+      this.http
+        .delete(`${environment.apiUrl}/classe/deletar/${item.id}`)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.historicoCompleto = this.historicoCompleto.filter(
+              (h) => h.id !== item.id
+            );
+            this.mensagemService.sucesso('Item excluído com sucesso!');
+            this.ajustarPaginaAposExclusao();
+          },
+          error: (err) => {
+            console.error('Erro ao excluir:', err);
+            this.mensagemService.erro('Erro ao excluir item');
+          },
+        });
+    } catch (error) {
+      console.error('Erro na confirmação:', error);
+      this.mensagemService.erro('Falha no processo de confirmação');
+    }
   }
 
   private ajustarPaginaAposExclusao(): void {
@@ -113,10 +128,5 @@ export class HistoricoCodigosComponent implements OnInit, OnDestroy {
 
   trackByHistorico(index: number, item: HistoricoItem): number {
     return item.id;
-  }
-
-  private mostrarFeedback(mensagem: string): void {
-    this.mensagemFeedback = mensagem;
-    setTimeout(() => this.mensagemFeedback = '', 3000);
   }
 }

@@ -1,9 +1,24 @@
 <header class="topbar">
   <div class="logo">🌟 Lumeatech</div>
-  <button class="criar-classe" (click)="criarCodigo()"> criar classe
-  </button>
 
-  <button class="historico" (click)="verHitorico()">historico</button>
+  <nav class="navegacao">
+    <span
+      class="link-nav"
+      [class.ativo]="ativo === 'criar'"
+      (click)="criarCodigo()"
+    >
+      Criar Classe
+    </span>
+
+    <span
+      class="link-nav"
+      [class.ativo]="ativo === 'historico'"
+      (click)="verHitorico()"
+    >
+      Histórico
+    </span>
+  </nav>
+
   <div class="barra-de-pesquisa">
     <lucide-icon name="Search"></lucide-icon>
     <input type="text" placeholder="Buscar..." />
@@ -13,7 +28,6 @@
     <button class="btn-icone" (click)="abrirPerfil()">
       <lucide-icon name="User"></lucide-icon>
     </button>
-
     <button class="btn-icone" (click)="logout()">
       <lucide-icon name="LogOut"></lucide-icon>
     </button>
