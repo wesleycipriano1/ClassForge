@@ -1,0 +1,24 @@
+<div class="redefinir-container">
+  <div class="redefinir-card">
+    <h1>Redefinir Senha</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label for="novaSenha">Nova Senha</label>
+      <input id="novaSenha" type="password" formControlName="novaSenha" placeholder="Nova senha" />
+
+      <label for="confirmarSenha">Confirmar Senha</label>
+      <input id="confirmarSenha" type="password" formControlName="confirmarSenha" placeholder="Confirmar senha" />
+
+      <div *ngIf="form.invalid && form.touched" class="erro">
+        Senhas inválidas ou não coincidem.
+      </div>
+
+      <button type="submit" [disabled]="form.invalid">Alterar Senha</button>
+    </form>
+
+    <button class="voltar" (click)="voltarLogin()">
+      Voltar para o login
+    </button>
+  </div>
+</div>
+
+ <div><app-loading-overlay /></div>

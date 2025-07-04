@@ -1,46 +1,70 @@
-<div><app-loading-overlay /></div>
-
 <div class="cadastro-container">
-  <section class="formulario">
-    <h1>Cadastro</h1>
-    <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
-      <label>Nome</label>
-      <input type="text" formControlName="nome" placeholder="Seu nome" />
-      <p *ngIf="nome?.invalid && nome?.touched">Nome é obrigatório</p>
+  <div class="cadastro-box">
+   
+    <div class="lado-esquerdo">
+      <img src="assets/img/code.png"  />
 
-      <label>Email</label>
-      <input type="email" formControlName="email" placeholder="Seu email" />
-      <p *ngIf="email?.invalid && email?.touched">Email inválido</p>
+      <h2>Bem-vindo!</h2>
+      <p>Crie sua conta para começar a usar nossos serviços.</p>
+    </div>
 
-      <label>Telefone</label>
-      <input
-        type="text"
-        formControlName="telefone"
-        placeholder="Ex: 87999999999"
-      />
-      <p *ngIf="telefone?.invalid && telefone?.touched">Telefone inválido</p>
+    
+    <section class="formulario">
+      <h1><i class="fa-solid fa-user-plus"></i> Crie sua conta</h1>
+      <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Nome</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" formControlName="nome" placeholder="Seu nome" />
+          </div>
+          <p *ngIf="nome?.invalid && nome?.touched">Nome é obrigatório</p>
+        </div>
 
-      <label>Senha</label>
-      <input type="password" formControlName="senha" placeholder="Senha" />
-      <p *ngIf="senha?.invalid && senha?.touched">
-        Senha deve ter pelo menos 6 caracteres
-      </p>
+        <div class="form-group">
+          <label>Email</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" formControlName="email" placeholder="Seu email" />
+          </div>
+          <p *ngIf="email?.invalid && email?.touched">Email inválido</p>
+        </div>
 
-      <label>Confirmar Senha</label>
-      <input
-        type="password"
-        formControlName="confirmarSenha"
-        placeholder="Confirme a senha"
-      />
-      <p *ngIf="confirmarSenha?.invalid && confirmarSenha?.touched">
-        Confirme a senha
-      </p>
+        <div class="form-group">
+          <label>Telefone</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-phone"></i>
+            <input type="text" formControlName="telefone" placeholder="Ex: 87999999999" />
+          </div>
+          <p *ngIf="telefone?.invalid && telefone?.touched">Telefone inválido</p>
+        </div>
 
-      <button type="submit" [disabled]="cadastroForm.invalid">Cadastrar</button>
-    </form>
+        <div class="form-group">
+          <label>Senha</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" formControlName="senha" placeholder="Senha" />
+          </div>
+          <p *ngIf="senha?.invalid && senha?.touched">Senha deve ter pelo menos 6 caracteres</p>
+        </div>
 
-    <button class="voltar-login" (onclick)="irLogin()">
-      Voltar para Login
-    </button>
-  </section>
+        <div class="form-group">
+          <label>Confirmar Senha</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" formControlName="confirmarSenha" placeholder="Confirme a senha" />
+          </div>
+          <p *ngIf="confirmarSenha?.invalid && confirmarSenha?.touched">Confirme a senha</p>
+        </div>
+
+        <button type="submit" [disabled]="cadastroForm.invalid">
+          <i class="fa-solid fa-check"></i> Cadastrar
+        </button>
+      </form>
+
+      <button class="voltar-login" (click)="irLogin()">
+        <i class="fa-solid fa-arrow-left"></i> Voltar para Login
+      </button>
+    </section>
+  </div>
 </div>

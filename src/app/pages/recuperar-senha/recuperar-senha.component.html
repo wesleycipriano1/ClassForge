@@ -1,13 +1,25 @@
 <div class="recuperar-container">
-    <h2>Recuperar Senha</h2>
+  <div class="recuperar-card">
+    <h1>Recuperar Senha</h1>
+    <p class="descricao">Informe seu e-mail para receber o link de redefinição.</p>
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <label for="email">Digite seu email</label>
-      <input type="email" formControlName="email" placeholder="seu@email.com">
-      <p *ngIf="form.get('email')?.invalid && form.get('email')?.touched">Email inválido</p>
-  
-      <button type="submit" [disabled]="form.invalid">Enviar</button>
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" placeholder="Digite seu email" />
+      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="erro">
+        Email inválido.
+      </div>
+
+      <button type="submit" [disabled]="form.invalid">Enviar Link</button>
     </form>
-  
-    <p *ngIf="enviado" class="msg-sucesso">Se o email estiver cadastrado, enviaremos instruções.</p>
+
+    <div *ngIf="enviado" class="sucesso">
+      ✅ Um link foi enviado ao seu e-mail.
+    </div>
+
+    <button class="voltar" (click)=voltarLogin()>
+      voltar para login
+    </button>
   </div>
-  
+</div>
+ <div><app-loading-overlay /></div>

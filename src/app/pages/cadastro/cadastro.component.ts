@@ -9,13 +9,14 @@ import { LoadingOverlayComponent } from '../../shared/loading-overlay/loading-ov
 import { LoadingService } from '../../shared/loading.service';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { MensagemService } from '../../services/mensagem.service';
 
 @Component({
   selector: 'app-cadastro',
   standalone: true,
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, LoadingOverlayComponent],
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class CadastroComponent {
   cadastroForm: FormGroup;
@@ -24,7 +25,8 @@ export class CadastroComponent {
     private fb: FormBuilder,
     private loadingService: LoadingService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private mensagemService:MensagemService
   ) {
     this.cadastroForm = this.createForm();
   }
@@ -63,7 +65,7 @@ export class CadastroComponent {
     if (this.cadastroForm.invalid) return;
 
     if (!this.senhasIguais()) {
-      alert('As senhas não coincidem.'); //depois criar um alerta personalizado
+      this.mensagemService.alerta('As senhas não coincidem.'); 
       return;
     }
     const usuario = {
@@ -77,18 +79,10 @@ export class CadastroComponent {
 
     this.http
       .post(`${environment.apiUrl}/cadastro`, usuario)
-      .pipe(
-        catchError((error) => {
-          this.handleError(error);
-          return throwError(
-            () => new Error(error.message || 'Erro desconhecido')
-          );
-          this.loadingService.esconder();
-        })
-      )
+      
       .subscribe({
         next: (response) =>
-          console.log('Cadastro realizado com sucesso:', response),
+          this.mensagemService.sucesso('Cadastro realizado com sucesso!'),
         error: () => this.loadingService.esconder(),
         complete: () => this.loadingService.esconder(),
       });

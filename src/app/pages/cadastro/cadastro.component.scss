@@ -1,72 +1,160 @@
 .cadastro-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   background:linear-gradient(135deg, #000000, #730088); 
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+
+  .cadastro-box {
     display: flex;
+    background: linear-gradient(135deg, #4b006e, #78008d); 
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 20px 2px rgba(255, 0, 255, 0.2);
+    max-width: 950px;
+    width: 100%;
+  }
+
+  .lado-esquerdo {
+    background: transparent;
+    color: white;
+    flex: 1;
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #1e1e2f;
-  
-    .formulario {
-      background: #2d2d44;
-      padding: 2rem;
-      border-radius: 10px;
-      color: white;
-      width: 100%;
+
+    img {
       max-width: 400px;
-      box-shadow: 0 0 10px #000;
-  
-      h1 {
-        text-align: center;
-        margin-bottom: 1rem;
-      }
-  
+      margin: 0 auto 1rem;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      margin-top: 1rem;
+      color: #00e5ff; 
+    }
+
+    p {
+      margin-top: 0.5rem;
+      color: #00e5ff;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+
+  .formulario {
+    flex: 1;
+    padding: 2.5rem;
+    color: white;
+
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-family: 'Georgia', serif;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+
       label {
         display: block;
-        margin-top: 1rem;
-      }
-  
-      input {
-        width: 100%;
-        padding: 8px;
-        margin-top: 4px;
-        border: none;
-        border-radius: 5px;
-        background: #444;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
         color: white;
       }
-  
-      p {
-        color: #ff5252;
-        font-size: 0.8rem;
-        margin: 0.3rem 0 0;
-      }
-      spam{color: red;
 
-      }
-  
-      button {
-        margin-top: 1.5rem;
-        width: 100%;
-        padding: 10px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
-  
-        &:disabled {
-          background-color: gray;
-          cursor: not-allowed;
+      .input-wrapper {
+        display: flex;
+        align-items: center;
+        background: white;
+        padding: 0.6rem 0.75rem;
+        border-radius: 8px;
+
+        i {
+          margin-right: 0.6rem;
+          color: #333;
+        }
+
+        input {
+          background: transparent;
+          border: none;
+          outline: none;
+          color: #333;
+          width: 100%;
+          font-size: 1rem;
         }
       }
-  
-      .voltar-login {
-        display: block;
-        margin-top: 1rem;
-        text-align: center;
-        color: #9ecbff;
-        text-decoration: underline;
+
+      p {
+        margin-top: 0.3rem;
+        font-size: 0.8rem;
+        color: #ff5252;
+      }
+    }
+
+    button[type='submit'] {
+      width: 100%;
+      padding: 0.9rem;
+      background: #00d5ff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #222;
+      margin-top: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      i {
+        margin-right: 0.5rem;
+      }
+
+      &:hover {
+        background: #0280ff;
+      }
+
+      &:disabled {
+        background: #999;
+        cursor: not-allowed;
+      }
+    }
+
+    .voltar-login {
+      margin-left: 100px;
+      margin-top: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgb(0, 149, 255);
+      border: 2px solid #000000;
+      padding: 0.6rem 1rem;
+      color: #000000;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #61ddff;
+        color: black;
+
+        i {
+          color: black;
+        }
+      }
+
+      i {
+        font-size: 1rem;
+        color: #c061ff;
       }
     }
   }
-  
+}

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PerfilComponent } from './perfil.component';
+import { RedefinirSenhaComponent } from './redefinir-senha.component';
 
-describe('PerfilComponent', () => {
-  let component: PerfilComponent;
-  let fixture: ComponentFixture<PerfilComponent>;
+describe('RedefinirSenhaComponent', () => {
+  let component: RedefinirSenhaComponent;
+  let fixture: ComponentFixture<RedefinirSenhaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PerfilComponent]
+      imports: [RedefinirSenhaComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PerfilComponent);
+    fixture = TestBed.createComponent(RedefinirSenhaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
